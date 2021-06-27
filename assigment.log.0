@@ -1,0 +1,5 @@
+[2021-06-27 19:37:19.966] - 9628 INFO [restartedMain] --- org.apache.catalina.core.StandardService: Starting service [Tomcat]
+[2021-06-27 19:37:20.047] - 9628 INFO [restartedMain] --- org.apache.catalina.core.StandardEngine: Starting Servlet engine: [Apache Tomcat/9.0.48]
+[2021-06-27 19:37:20.359] - 9628 INFO [restartedMain] --- org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]: Initializing Spring embedded WebApplicationContext
+[2021-06-27 19:37:28.752] - 9628 INFO [http-nio-8080-exec-1] --- org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]: Initializing Spring DispatcherServlet 'dispatcherServlet'
+[2021-06-27 19:37:28.977] - 9628 WARNING [http-nio-8080-exec-1] --- org.apache.catalina.util.SessionIdGeneratorBase: Creation of SecureRandom instance for session ID generation using [SHA1PRNG] took [180] milliseconds.

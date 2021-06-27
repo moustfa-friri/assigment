@@ -1,0 +1,143 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+
+<head>
+    <title>Statement</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+</head>
+<body>
+
+
+<div class="container">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Statement</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a th:href="@{/logout}">Log Out</a>
+                    </li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+
+    <div class="starter-template">
+         <span sec:authorize="isAuthenticated()">
+                        Welcome , <a sec:authentication="name"></a></span>
+
+        <div class="row">
+            <div class="col-md-4">
+                <h4>Statement Filter</h4>
+                <form class="form-horizontal" id="from" action="/statement/search">
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <select class="form-control" name="accountId">
+                                <option value="0">select account</option>
+                                <option th:each="account : ${accounts}" th:value="${account.getId()}"
+                                        th:text="${account.toString() }" ></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio"  readonly="readonly" name="filter" id="dateRange" value="dateRange" checked>
+                            Date Range
+                        </label>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input class="form-control range inputDateRange" type="text" name="fromDate" i
+                                       placeholder="10/10/1990">
+                            </div>
+                            <div class="col-md-6">
+                                <input class="form-control range inputDateRange" type="text" name="toDate"
+                                       placeholder="To date">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio"  readonly="readonly" name="filter" id="amountRange" value="amountRange">
+                            Amount range
+                        </label>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input class="form-control range inputAmountRange"  type="text" name="fromAmount"
+                                       placeholder="from amount">
+                            </div>
+                            <div class="col-md-6">
+                                <input class="form-control range inputAmountRange" type="text" name="toAmount"
+                                       placeholder="to amount ">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio"  readonly="readonly" id="filter" name="filter" value="noneRange">
+                            none
+                        </label>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6" style="padding-top: 5px">
+                        <input type="submit" class="btn btn-sm btn-primary btn-block" value="Search"/>
+                    </div>
+                </form>
+            </div>
+
+          <div class="col-md-8">
+              <h4>statements</h4>
+              <div th:if="${msg}">
+                  <div class="alert alert-danger" th:text="${msg}">>
+                  </div>
+              </div>
+              <table class="table table-hover">
+                  <thead>
+                  <th>#</th>
+                  <th>Transaction Date</th>
+                  <th>Transaction Amount</th>
+                  </thead>
+
+                  <tbody>
+                  <tr th:each="statement : ${statements}">
+                      <td th:text="${statement.getId()}"></td>
+                      <td th:text="${statement.getDateField()}"></td>
+                      <td th:text="${statement.getAmount()}"></td>
+                  </tr>
+
+                  </tbody>
+              </table>
+          </div>
+        </div>
+
+    </div>
+
+</div>
+<!-- /.container -->
+
+<script>
+    $(document).ready(function () {
+        $('.inputAmountRange').attr('disabled', 'disabled');
+        $('input:radio[name=filter]').change(function () {
+            $('.range').attr('disabled', 'disabled');
+
+            if (this.value == 'dateRange') {
+                $('.inputDateRange').removeAttr('disabled');
+            } else if (this.value == 'amountRange') {
+                $('.inputAmountRange').removeAttr('disabled');
+            }
+        });
+
+    });
+</script>
+</body>
+</html>
